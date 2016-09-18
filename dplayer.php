@@ -62,7 +62,7 @@ class DPlayer {
     
     public static function ready() {
 ?>
-<script>var dPlayers = [];var dPlayerOptions = [];</script>;
+<script>var dPlayers = [];var dPlayerOptions = [];</script>
 <?php
     }
     
@@ -83,10 +83,16 @@ class DPlayer {
         $data = array(
             'id' => $id,
             'autoplay' => false,
-            'theme' => $theme
+            'theme' => $theme,
+            'loop' => false,
+            'screenshot' => false,
+            'hotkey' => true
         );
 
         $data['autoplay'] = ($atts['autoplay'] == 'true') ? true : false;
+        $data['loop'] = ($atts['loop'] == 'true') ? true : false;
+        $data['screenshot'] = ($atts['screenshot'] == 'true') ? true : false;
+        $data['hotkey'] = ($atts['hotkey'] == 'true') ? true : false;
 
         $playerCode = '<div id="player'.$id.'" class="dplayer">';
         $playerCode .= "</div>\n";
@@ -109,7 +115,6 @@ EOF;
     public static function add_script() {
         if (!self::$add_script) {
             wp_enqueue_script( 'dplayer', site_url('/wp-content/plugins/dplayer/js/DPlayer.min.js'), false, '1.0.9', false );
-            wp_enqueue_script( 'dplayer-hls', site_url('/wp-content/plugins/dplayer/js/plugins/hls.min.js'), false, '1.0.9', false );
             wp_enqueue_script( 'init-dplayer', site_url('/wp-content/plugins/dplayer/js/init-dplayer.js'), false, '1.0.0', false );
             self::$add_script = true;
         } 
