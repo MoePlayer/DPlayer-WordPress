@@ -103,7 +103,7 @@ class DPlayer {
         $playerCode .= <<<EOF
 <script>dPlayerOptions.push({$js});</script>
 EOF;
-        echo $playerCode;
+        return $playerCode;
     }
     
     public static function add_script() {
