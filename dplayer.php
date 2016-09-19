@@ -3,7 +3,7 @@
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
 * Version: 1.0
-* Author: BlueCocoa(WordPress Plugins)
+* Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 *
 * Acknowledgement

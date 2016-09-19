@@ -20,5 +20,16 @@ Usage is rather simple, and here is the template of shortcode we supported.
 
 Parameter 'url' is the source URL to the video file, you can upload the video to your WordPress library, then use it here.
 Parameter 'pic' is the poster of the video. And it's optional.
-Parameter 'autoplay', as the name suggests, if it is true, then once the video is prepared, it starts to play . Default false and it's optional also.
+Parameter 'autoplay', as the name suggests, if it is true, then once the video is prepared, it starts to play . Default false and it is optional also.
+Parameter 'screenshot', enable screenshot?. Optional and default false.
+Parameter 'loop', enable loop?. Optional and default false.
+Parameter 'hotkey', enable builtin hotkey? including left, right and Space. Optional and default true.
 Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
+
+### Screenshots
+
+1. Write the shortcode manually in your editor
+![Screenshot 1](https://github.com/BlueCocoa/DPlayer-WordPress/assets/screenshot-1.png)
+
+2. Save and you’ll get this lovely danmuku video player!
+![Screenshot 2](https://github.com/BlueCocoa/DPlayer-WordPress/assets/screenshot-2.png)
