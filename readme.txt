@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: 0xbbc
-Tags: video, player
+Tags: video, player, shortcode
 Requires at least: 3.0.1
 Tested up to: 4.6.1
 Stable tag: trunk
