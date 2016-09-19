@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.0.2
+* Version: 1.0.3
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 *
@@ -86,13 +86,15 @@ class DPlayer {
             'theme' => $theme,
             'loop' => false,
             'screenshot' => false,
-            'hotkey' => true
+            'hotkey' => true,
+            'preload' => 'metadata'
         );
 
-        $data['autoplay'] = ($atts['autoplay'] == 'true') ? true : false;
-        $data['loop'] = ($atts['loop'] == 'true') ? true : false;
-        $data['screenshot'] = ($atts['screenshot'] == 'true') ? true : false;
-        $data['hotkey'] = ($atts['hotkey'] == 'true') ? true : false;
+        if ($atts['autoplay']) $data['autoplay'] = ($atts['autoplay'] == 'true') ? true : false;
+        if ($atts['loop']) $data['loop'] = ($atts['loop'] == 'true') ? true : false;
+        if ($atts['screenshot']) $data['screenshot'] = ($atts['screenshot'] == 'true') ? true : false;
+        if ($atts['hotkey']) $data['hotkey'] = ($atts['hotkey'] == 'true') ? true : false;
+        if ($atts['preload']) $data['preload'] = (in_array($atts['preload'], array('auto', 'metadata', 'none')) == true) ? $atts['preload'] : 'metadata';
 
         $playerCode = '<div id="player'.$id.'" class="dplayer">';
         $playerCode .= "</div>\n";
