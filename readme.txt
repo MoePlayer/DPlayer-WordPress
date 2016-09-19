@@ -39,6 +39,9 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 
 == Changelog ==
 
+= 1.0.3=
+* Fixed a bug when assign default value
+
 = 1.0.2 =
 * Conform to the WordPress readme.txt standard
 * Add screenshots
