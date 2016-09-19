@@ -29,7 +29,7 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 ### Screenshots
 
 1. Write the shortcode manually in your editor
-![Screenshot 1](https://github.com/BlueCocoa/DPlayer-WordPress/assets/screenshot-1.png)
+![Screenshot 1](https://raw.githubusercontent.com/BlueCocoa/DPlayer-WordPress/master/assets/screenshot-1.png)
 
 2. Save and you’ll get this lovely danmuku video player!
-![Screenshot 2](https://github.com/BlueCocoa/DPlayer-WordPress/assets/screenshot-2.png)
+![Screenshot 2](https://raw.githubusercontent.com/BlueCocoa/DPlayer-WordPress/master/assets/screenshot-2.png)
