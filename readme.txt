@@ -39,6 +39,9 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 
 == Changelog ==
 
+= 1.0.4=
+* Upgrade to GPLv2 License
+
 = 1.0.3=
 * Fixed a bug when assign default value
 
