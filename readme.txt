@@ -3,11 +3,9 @@ Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
 Tested up to: 4.6.1
-Stable tag: trunk
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
 
 == Description ==
 
@@ -36,13 +34,27 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 
 1. Write the shortcode manually in your editor
 2. Save and you’ll get this lovely danmuku video player!
+3. Config Danmaku API URL and token in settings page
 
 == Changelog ==
 
-= 1.0.4=
+= 1.0.8 =
+* Add settings page for API URL and token
+
+= 1.0.7 =
+* Change to new API URL '//danmaku.daoapp.io/'
+* Update DPlayer to 1.0.10
+
+= 1.0.6 =
+* Compatibility with PHP 5
+	
+= 1.0.5 =
+* Using preload="metadata" in js/DPlayer.min.js
+
+= 1.0.4 =
 * Upgrade to GPLv2 License
 
-= 1.0.3=
+= 1.0.3 =
 * Fixed a bug when assign default value
 
 = 1.0.2 =

@@ -2,11 +2,11 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.0.4
+* Version: 1.0.8
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
-* License: GPLv2
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* License: GPLv3
+* License URI: http://www.gnu.org/licenses/gpl-3.0.html
 *
 * Acknowledgement
 *  DPlayer by DIYgod
@@ -16,19 +16,35 @@
 *    Thanks to https://github.com/volio/DPlayer-for-typecho
 */
 
+require_once( dirname( __FILE__ ) . '/dplayer-admin.php' );
+
 class DPlayer {
     static $add_script;
     
     public static function init() {
+        register_activation_hook( __FILE__, array( __CLASS__, 'dplayer_install' ) );
+        register_deactivation_hook( __FILE__, array( __CLASS__, 'dplayer_uninstall' ) );
         add_action( 'wp_head', array( __CLASS__, 'ready') );
         add_action( 'wp_footer', array( __CLASS__, 'add_script' ) );
         add_shortcode( 'dplayer', array( __CLASS__, 'dplayer_load') );
+        add_filter( 'plugin_action_links', array( __CLASS__, 'dplayer_settings_link' ), 9, 2 );
     }
     
     public static function ready() {
 ?>
 <script>var dPlayers = [];var dPlayerOptions = [];</script>
 <?php
+    }
+    
+    // registers default options
+    public static function dplayer_install() {
+        add_option( 'kblog_danmaku_url', '//danmaku.daoapp.io' );
+        add_option( 'kblog_danmaku_token', 'tokendemo' );
+    }
+    
+    public static function dplayer_uninstall() {
+        delete_option( 'kblog_danmaku_url' );
+        delete_option( 'kblog_danmaku_token' );
     }
     
     public static function dplayer_load($atts = [], $content = null, $tag = '') {
@@ -67,8 +83,8 @@ class DPlayer {
 
         $danmaku = array(
             'id' => md5($id),
-            'token' => md5(md5($id) . date('YmdH', time())),
-            'api' => '//danmaku.daoapp.io/dplayer/danmaku',
+            'token' => get_option( 'kblog_danmaku_token', '' ),
+            'api' => get_option( 'kblog_danmaku_url', '' ),
         );
         $data['danmaku'] = ($atts['danmu'] != 'false') ? $danmaku : null;
 
@@ -79,9 +95,17 @@ EOF;
         return $playerCode;
     }
     
+    public static function dplayer_settings_link( $links, $file ) {
+        if ( plugins_url('dplayer-admin.php', __FILE__) === $file && function_exists( 'admin_url' ) ) {
+            $settings_link = '<a href="' . esc_url( admin_url( 'options-general.php?page=kblog-dplayer' ) ) . '">' . esc_html__( 'Settings' ) . '</a>';
+            array_unshift( $links, $settings_link );
+        }
+        return $links;
+    }
+    
     public static function add_script() {
         if (!self::$add_script) {
-            wp_enqueue_script( 'dplayer', plugins_url('js/DPlayer.min.js', __FILE__), false, '1.0.9', false );
+            wp_enqueue_script( 'dplayer', plugins_url('js/DPlayer.min.js', __FILE__), false, '1.0.10', false );
             wp_enqueue_script( 'init-dplayer', plugins_url('js/init-dplayer.js', __FILE__), false, '1.0.0', false );
             self::$add_script = true;
         } 

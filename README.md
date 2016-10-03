@@ -34,3 +34,6 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 
 2. Save and you’ll get this lovely danmuku video player!
 ![Screenshot 2](https://raw.githubusercontent.com/BlueCocoa/DPlayer-WordPress/master/assets/screenshot-2.png)
+
+3. Now we can edit danmaku API URL and token in settings page
+![Screenshot 3](https://raw.githubusercontent.com/BlueCocoa/DPlayer-WordPress/master/assets/screenshot-3.png)
