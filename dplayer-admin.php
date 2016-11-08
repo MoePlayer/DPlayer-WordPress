@@ -67,6 +67,26 @@ class DPlayer_Admin {
             "<input type='textbox' name='kblog_danmaku_token' id='kblog_danmaku_token' $danmaku_token>",
             'kblog_danmaku_token'
         );
+        
+        $enable_hls = '';
+        if ( get_option( 'kblog_enable_hls' ) ) {
+            $enable_hls = 'checked="true"';
+        }
+        $this->admin_table_row( 'Enable hls.js',
+            'Live Video (HTTP Live Streaming, M3U8 format) support',
+            "<input type='checkbox' name='kblog_enable_hls' id='kblog_enable_hls' value='1' $enable_hls />",
+            'kblog_enable_hls'
+        );
+        
+        $enable_flv = '';
+        if ( get_option( 'kblog_enable_flv' ) ) {
+            $enable_flv = 'checked="true"';
+        }
+        $this->admin_table_row( 'Enable flv.js',
+            'FLV format support',
+            "<input type='checkbox' name='kblog_enable_flv' id='kblog_enable_flv' value='1' $enable_flv />",
+            'kblog_enable_flv'
+        );
 
         $this->table_foot();
     }
@@ -79,6 +99,9 @@ class DPlayer_Admin {
         if ( array_key_exists( 'kblog_danmaku_token', $_POST ) && isset( $_POST['kblog_danmaku_token'] ) ) { // input var okay
             update_option( 'kblog_danmaku_token', wp_unslash( $_POST['kblog_danmaku_token'] ) ); // input var okay
         }
+        
+        update_option( 'kblog_enable_hls', array_key_exists( 'kblog_enable_hls', $_POST ) ); // input var okay
+        update_option( 'kblog_enable_flv', array_key_exists( 'kblog_enable_flv', $_POST ) ); // input var okay
     }
 
     function table_head() {

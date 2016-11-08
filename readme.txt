@@ -3,9 +3,9 @@ Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
 Tested up to: 4.6.1
-Stable tag: 1.0.8
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 1.1.2
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
@@ -22,6 +22,7 @@ Parameter 'screenshot', enable screenshot?. Optional and default false.
 Parameter 'loop', enable loop?. Optional and default false.
 Parameter 'preload', preload mode, 'auto', 'metatdata' or 'none'. Optional and default metadata.
 Parameter 'hotkey', enable builtin hotkey? including left, right and Space. Optional and default true.
+Parameter 'bilibili', bilibili视频AV号. Additional danmaku from bilibili
 Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 
 == Installation ==
@@ -37,6 +38,14 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 3. Config Danmaku API URL and token in settings page
 
 == Changelog ==
+
+= 1.1.2 =
+* Update DPlayer to version 1.1.2
+* Add support for hls.min.js
+* Add support for flv.min.js
+
+= 1.0.9 =
+* Update DPlayer to version 1.1.1
 
 = 1.0.8 =
 * Add settings page for API URL and token

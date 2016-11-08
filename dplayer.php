@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.0.8
+* Version: 1.1.2
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -76,6 +76,7 @@ class DPlayer {
         if ($atts['screenshot']) $data['screenshot'] = ($atts['screenshot'] == 'true') ? true : false;
         if ($atts['hotkey']) $data['hotkey'] = ($atts['hotkey'] == 'true') ? true : false;
         if ($atts['preload']) $data['preload'] = (in_array($atts['preload'], array('auto', 'metadata', 'none')) == true) ? $atts['preload'] : 'metadata';
+        if ($atts['bilibili']) $data['addition'] = array(get_option( 'kblog_danmaku_url', '' ).'bilibili?aid='.$atts['bilibili']);
 
         $playerCode = '<div id="player'.$id.'" class="dplayer">';
         $playerCode .= "</div>\n";
@@ -105,7 +106,13 @@ EOF;
     
     public static function add_script() {
         if (!self::$add_script) {
-            wp_enqueue_script( 'dplayer', plugins_url('js/DPlayer.min.js', __FILE__), false, '1.0.10', false );
+            if ( get_option( 'kblog_enable_flv' ) ) {
+                wp_enqueue_script( '0-dplayer-flv', plugins_url('js/plugin/flv.min.js', __FILE__), false, '1.1.2', false );
+            }
+            if ( get_option( 'kblog_enable_hls' ) ) {
+                wp_enqueue_script( '0-dplayer-hls', plugins_url('js/plugin/hls.min.js', __FILE__), false, '1.1.2', false );
+            }
+            wp_enqueue_script( 'dplayer', plugins_url('js/DPlayer.min.js', __FILE__), false, '1.1.2', false );
             wp_enqueue_script( 'init-dplayer', plugins_url('js/init-dplayer.js', __FILE__), false, '1.0.0', false );
             self::$add_script = true;
         } 
