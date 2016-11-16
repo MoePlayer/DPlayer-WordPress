@@ -3,7 +3,7 @@ Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
 Tested up to: 4.6.1
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ Parameter 'screenshot', enable screenshot?. Optional and default false.
 Parameter 'loop', enable loop?. Optional and default false.
 Parameter 'preload', preload mode, 'auto', 'metatdata' or 'none'. Optional and default metadata.
 Parameter 'hotkey', enable builtin hotkey? including left, right and Space. Optional and default true.
-Parameter 'bilibili', bilibili视频AV号. Additional danmaku from bilibili
+Parameter 'bilibili', bilibili视频AV号 或者 完整的bilibili视频链接. Additional danmaku from bilibili
 Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 
 == Installation ==
@@ -38,6 +38,16 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 3. Config Danmaku API URL and token in settings page
 
 == Changelog ==
+
+= 1.1.4 =
+* Extended support for bilibili param, now you can use either
+- bilibili='23333'
+- bilibili='http://www.bilibili.com/video/av2333333/index_233.html#page=2333'
+to load additional danmaku. 
+
+This plugin will give you exactly the danma that you need, which means, 
+
+If you give the original URL to the bilibili video, this plugin will identify the URL format, load the right danmaku. In this example, 'http://www.bilibili.com/video/av2333333/index_23333#page=233' is given. And the plugin knows that aid is 2333333 and your requested page is 2333. (According to bilibili, 'index_233.html#page=2333' means that you starts at page 233 but currently you're watching page 2333)
 
 = 1.1.3 =
 * Fixed bilibili danmaku support

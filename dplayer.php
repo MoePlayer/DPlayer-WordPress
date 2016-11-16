@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.1.3
+* Version: 1.1.4
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -47,6 +47,50 @@ class DPlayer {
         delete_option( 'kblog_danmaku_token' );
     }
     
+    public static function dplayer_bilibili_url_handler($bilibili_url) {
+        $aid = 0;
+        $page = 1;
+        $is_bilibili = false;
+        if (preg_match('/^[\d]+$/', $bilibili_url)) {
+            $aid = $bilibili_url;
+            $is_bilibili = true;
+        } else {
+            $parsed = parse_url($bilibili_url);
+            if ($parsed['host'] === 'www.bilibili.com') {
+                preg_match('/^\/video\/av([\d]+)(?:\/index_([\d]+)\.html)?/', $parsed['path'], $path_match);
+                if ($path_match) {
+                    $is_bilibili = true;
+                    $aid = $path_match[1];
+                    $page = $path_match[2] == null ? 1 : $path_match[2];
+                    preg_match('/^page=([\d]+)$/', $parsed['fragment'], $page_match);
+                    if ($page_match) $page = $page_match[1];
+                }
+            }
+        }
+
+        if ($is_bilibili) {
+            if ($page == 1) {
+                return array(get_option( 'kblog_danmaku_url', '' ).'bilibili?aid='.$aid);
+            } else {
+                $cid = -1;
+                $json_response = @json_decode(gzdecode(file_get_contents('http://www.bilibili.com/widget/getPageList?aid='.$aid)), true);
+                if ($json_response) {
+                    foreach ($json_response as $page_info) {
+                        if ($page_info['page'] == $page) {
+                            $cid = $page_info['cid'];
+                            break;
+                        }
+                    }
+                }
+                
+                if ($cid != -1) {
+                    return array(get_option( 'kblog_danmaku_url', '' ).'bilibili?cid='.$cid);
+                }
+            }
+        }
+        return null;
+    }
+    
     public static function dplayer_load($atts = [], $content = null, $tag = '') {
         // normalize attribute keys, lowercase
         $atts = array_change_key_case((array)$atts, CASE_LOWER);
@@ -87,7 +131,8 @@ class DPlayer {
             'token' => get_option( 'kblog_danmaku_token', '' ),
             'api' => get_option( 'kblog_danmaku_url', '' ),
         );
-        if ($atts['bilibili']) $danmaku['addition'] = array(get_option( 'kblog_danmaku_url', '' ).'bilibili?aid='.$atts['bilibili']);
+        
+        if ($atts['bilibili']) $danmaku['addition'] = DPlayer::dplayer_bilibili_url_handler($atts['bilibili']);
         $data['danmaku'] = ($atts['danmu'] != 'false') ? $danmaku : null;
 
         $js = json_encode($data);
