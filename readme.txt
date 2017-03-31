@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Today, DPlayer is coming to WordPress.
 
 Usage is rather simple, and here is the template of shortcode we supported.
-[dplayer url="http://xxx.xxx.com/xxx.mp4" pic="http://xxx.xxx.com/xxx.png" autoplay="true" danmu="true"/]
+[dplayer url="https://anotherhome.net/DIYgod-cannot-even-discribe.mp4" pic="https://anotherhome.com/DIYgod-cannot-even-discribe.png" autoplay="true" danmu="true"/]
 
 Parameter 'url' is the source URL to the video file, you can upload the video to your WordPress library, then use it here.
 Parameter 'pic' is the poster of the video. And it's optional.
