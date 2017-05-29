@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.1.5
+* Version: 1.1.6
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -91,7 +91,10 @@ class DPlayer {
         return null;
     }
     
-    public static function dplayer_load($atts = [], $content = null, $tag = '') {
+    public static function dplayer_load($atts, $content, $tag) {
+        if ($atts == null) $atts = [];
+        if ($tag == null) $tag = '';
+        
         // normalize attribute keys, lowercase
         $atts = array_change_key_case((array)$atts, CASE_LOWER);
         
