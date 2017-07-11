@@ -2,8 +2,8 @@
 Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
-Tested up to: 4.7.3
-Stable tag: 1.1.6
+Tested up to: 4.8.0
+Stable tag: 1.1.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,9 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 3. Config Danmaku API URL and token in settings page
 
 == Changelog ==
+
+= 1.1.7 =
+Update DPlayer to release 1.4.0. Please visit https://github.com/DIYgod/DPlayer/releases for details.
 
 = 1.1.6 =
 Improve compatibility on old versions of PHP.
@@ -92,7 +95,7 @@ If you give the original URL to the bilibili video, this plugin will identify th
 = 1.0.1 =
 * Returns the generated code instead of echoing it
 
-= 1.0.0 =
+= 1.0.0 =w
 * Initial version
 
 == Upgrade Notice ==
