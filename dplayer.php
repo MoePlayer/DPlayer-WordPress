@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.1.8
+* Version: 1.1.9
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -97,13 +97,13 @@ class DPlayer {
         
         // normalize attribute keys, lowercase
         $atts = array_change_key_case((array)$atts, CASE_LOWER);
-        
-        $id = md5($_SERVER['HTTP_HOST'] . $atts['url']);
+        $bilibili_param = $atts['bilibili'] ? $atts['bilibili'] : '';
+        $id = md5($_SERVER['HTTP_HOST'] . $atts['url'] . $bilibili_param);
         $result = array(
             'url' => $atts['url'] ? $atts['url'] : '',
-            'pic' => $atts['pic'] ? $atts['pic'] : ''
+            'pic' => $atts['pic'] ? $atts['pic'] : '',
+            'type' => $atts['type'] ? $atts['type'] : 'auto', 
         );
-        if (empty($result)) return;
         
         $theme = $atts['theme'];
         if (!$theme) $theme = '#FADFA3';
@@ -127,7 +127,6 @@ class DPlayer {
 
         $playerCode = '<div id="player'.$id.'" class="dplayer">';
         $playerCode .= "</div>\n";
-        $data['video'] = $result;
 
         $danmaku = array(
             'id' => md5($id),
@@ -135,7 +134,12 @@ class DPlayer {
             'api' => get_option( 'kblog_danmaku_url', '' ),
         );
         
-        if ($atts['bilibili']) $danmaku['addition'] = DPlayer::dplayer_bilibili_url_handler($atts['bilibili']);
+        if ($bilibili_param) {
+            $danmaku['addition'] = DPlayer::dplayer_bilibili_url_handler($bilibili_param);
+            if (empty($atts['url'])) $result['url'] = $bilibili_param;
+        }
+        
+        $data['video'] = $result;
         $data['danmaku'] = ($atts['danmu'] != 'false') ? $danmaku : null;
 
         $js = json_encode($data);

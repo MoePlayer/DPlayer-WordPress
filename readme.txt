@@ -3,7 +3,7 @@ Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
 Tested up to: 4.8.0
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
