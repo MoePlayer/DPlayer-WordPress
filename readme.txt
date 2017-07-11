@@ -3,7 +3,7 @@ Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
 Tested up to: 4.8.0
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,9 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 3. Config Danmaku API URL and token in settings page
 
 == Changelog ==
+
+= 1.1.8 =
+Using the right API to enqueue DPlayer CSS.
 
 = 1.1.7 =
 Update DPlayer to release 1.4.0. Please visit https://github.com/DIYgod/DPlayer/releases for details.
