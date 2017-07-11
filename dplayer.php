@@ -70,7 +70,8 @@ class DPlayer {
 
         if ($is_bilibili) {
             if ($page == 1) {
-                return array(get_option( 'kblog_danmaku_url', '' ).'bilibili?aid='.$aid);
+                $danmaku_url = stripslashes(get_option( 'kblog_danmaku_url', '' ));
+                return array('danma' => $danmaku_url.'bilibili?aid='.$aid, 'video' => $danmaku_url.'/video/bilibili?aid='.$aid);
             } else {
                 $cid = -1;
                 $json_response = @json_decode(gzdecode(file_get_contents('http://www.bilibili.com/widget/getPageList?aid='.$aid)), true);
@@ -84,7 +85,7 @@ class DPlayer {
                 }
                 
                 if ($cid != -1) {
-                    return array(get_option( 'kblog_danmaku_url', '' ).'bilibili?cid='.$cid);
+                    return array('danma' => $danmaku_url.'bilibili?cid='.$cid, 'video' => $danmaku_url.'/video/bilibili?cid='.$cid);
                 }
             }
         }
@@ -135,8 +136,11 @@ class DPlayer {
         );
         
         if ($bilibili_param) {
-            $danmaku['addition'] = DPlayer::dplayer_bilibili_url_handler($bilibili_param);
-            if (empty($atts['url'])) $result['url'] = $bilibili_param;
+            $bilibili_parsed = DPlayer::dplayer_bilibili_url_handler($bilibili_param);
+            $danmaku['addition'] = array($bilibili_parsed['danma']);
+            if ($bilibili_parsed && empty($atts['url'])) {
+                $result['url'] = $bilibili_parsed['video'];
+            }
         }
         
         $data['video'] = $result;
