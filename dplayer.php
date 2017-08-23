@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.2.0
+* Version: 1.2.1
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -40,11 +40,15 @@ class DPlayer {
     public static function dplayer_install() {
         add_option( 'kblog_danmaku_url', '//danmaku.daoapp.io' );
         add_option( 'kblog_danmaku_token', 'tokendemo' );
+        add_option( 'kblog_danmaku_dplayer_version', '1.6.0' );
+        add_option( 'kblog_danmaku_dplayer_version_check', '0' );
     }
     
     public static function dplayer_uninstall() {
         delete_option( 'kblog_danmaku_url' );
         delete_option( 'kblog_danmaku_token' );
+        delete_option( 'kblog_danmaku_dplayer_version' );
+        delete_option( 'kblog_danmaku_dplayer_version_check' );
     }
     
     public static function dplayer_bilibili_url_handler($bilibili_url) {
@@ -169,8 +173,29 @@ EOF;
             if ( get_option( 'kblog_enable_hls' ) ) {
                 wp_enqueue_script( '0-dplayer-hls', plugins_url('dplayer/plugin/hls.min.js', __FILE__), false, '1.4.0', false );
             }
-            wp_enqueue_style( 'dplayer', plugins_url('dplayer/DPlayer.min.css', __FILE__), false, '1.4.0', false );
-            wp_enqueue_script( 'dplayer', plugins_url('dplayer/DPlayer.min.js', __FILE__), false, '1.4.0', false );
+            
+            $current_time = time();
+            $last_check = (int)get_option( 'kblog_danmaku_dplayer_version_check', '0' );
+            $dplayer_version = get_option( 'kblog_danmaku_dplayer_version', '1.6.0' );
+            
+            if ($current_time - $last_check > 86400 /* 86400 = 60 * 60 * 24 i.e 24hrs */) {
+                $response = wp_remote_get( 'https://api.bootcdn.cn/libraries/dplayer.json' );
+                if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+                    $body = $response['body']; // use the content
+                    $json_data = @json_decode($body, true);
+                    $json_dplayer_version = @$json_data['version'];
+                    if (preg_grep('/^[\d\.]+$/', $json_dplayer_version)) {
+                        if (strcmp($dplayer_version, $json_dplayer_version) != 0) {
+                            update_option( 'kblog_danmaku_dplayer_version', $json_dplayer_version );
+                            $dplayer_version = $json_dplayer_version;
+                        }
+                    }
+                }
+                update_option( 'kblog_danmaku_dplayer_version_check', $current_time );
+            }
+            
+            wp_enqueue_style( 'dplayer', esc_url("https://cdn.bootcss.com/dplayer/$dplayer_version/DPlayer.min.css"), false, $dplayer_version, false );
+            wp_enqueue_script( 'dplayer', esc_url("https://cdn.bootcss.com/dplayer/$dplayer_version/DPlayer.min.js"), false, $dplayer_version, false );
             wp_enqueue_script( 'init-dplayer', plugins_url('dplayer/init-dplayer.js', __FILE__), false, '1.0.0', false );
             self::$add_script = true;
         } 
