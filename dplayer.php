@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.1.9
+* Version: 1.2.0
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -138,7 +138,7 @@ class DPlayer {
         if ($bilibili_param) {
             $bilibili_parsed = DPlayer::dplayer_bilibili_url_handler($bilibili_param);
             $danmaku['addition'] = array($bilibili_parsed['danma']);
-            if ($bilibili_parsed && empty($atts['url'])) {
+            if ($danmaku['addition'] && empty($atts['url'])) {
                 $result['url'] = $bilibili_parsed['video'];
             }
         }
