@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.2.2
+* Version: 1.2.3
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -40,7 +40,7 @@ class DPlayer {
     public static function dplayer_install() {
         add_option( 'kblog_danmaku_url', '//danmaku.daoapp.io' );
         add_option( 'kblog_danmaku_token', 'tokendemo' );
-        add_option( 'kblog_danmaku_dplayer_version', '1.6.1' );
+        add_option( 'kblog_danmaku_dplayer_version', '1.25.0' );
         add_option( 'kblog_danmaku_dplayer_version_check', '0' );
     }
     
@@ -104,50 +104,67 @@ class DPlayer {
         $atts = array_change_key_case((array)$atts, CASE_LOWER);
         $bilibili_param = $atts['bilibili'] ? $atts['bilibili'] : '';
         $id = md5($_SERVER['HTTP_HOST'] . $atts['url'] . $bilibili_param);
-        $result = array(
-            'url' => $atts['url'] ? $atts['url'] : '',
-            'pic' => $atts['pic'] ? $atts['pic'] : '',
-            'type' => $atts['type'] ? $atts['type'] : 'auto', 
-        );
         
-        $theme = $atts['theme'];
-        if (!$theme) $theme = '#FADFA3';
-
         $data = array(
             'id' => $id,
             'autoplay' => false,
-            'theme' => $theme,
+            'theme' => $atts['theme'] ? $atts['theme'] : '#FADFA3',
             'loop' => false,
             'screenshot' => false,
             'hotkey' => true,
-            'preload' => 'metadata'
+            'preload' => 'metadata',
+            'lang' => $atts['lang'] ? $atts['lang'] : 'zh-cn',
+            'logo' => $atts['logo'] ? $atts['logo'] : null,
+            'volume' => $atts['volume'] ? $atts['volume'] : 0.7,
+            'mutex' => true,
         );
-
         if ($atts['autoplay']) $data['autoplay'] = ($atts['autoplay'] == 'true') ? true : false;
         if ($atts['loop']) $data['loop'] = ($atts['loop'] == 'true') ? true : false;
         if ($atts['screenshot']) $data['screenshot'] = ($atts['screenshot'] == 'true') ? true : false;
         if ($atts['hotkey']) $data['hotkey'] = ($atts['hotkey'] == 'true') ? true : false;
         if ($atts['preload']) $data['preload'] = (in_array($atts['preload'], array('auto', 'metadata', 'none')) == true) ? $atts['preload'] : 'metadata';
-        
+        if ($atts['mutex']) $data['mutex'] = ($atts['mutex'] == 'true') ? true : false;
+		
+        $video = array(
+            'url' => $atts['url'] ? $atts['url'] : '',
+            'pic' => $atts['pic'] ? $atts['pic'] : '',
+            'type' => $atts['type'] ? $atts['type'] : 'auto',
+            'thumbnails' => $atts['thumbnails'] ? $atts['thumbnails'] : '',
+        );
 
-        $playerCode = '<div id="player'.$id.'" class="dplayer">';
-        $playerCode .= "</div>\n";
+        $subtitle = array(
+            'url' => $atts['subtitleurl'] ? $atts['subtitleurl'] : '',
+            'type' => $atts['subtitletype'] ? $atts['subtitletype'] : 'webvtt',
+            'fontSize' => $atts['subtitlefontSize'] ? $atts['subtitlefontSize'] : '25px', 
+            'bottom' => $atts['subtitlebottom'] ? $atts['subtitlebottom'] : '10%',
+            'color' => $atts['subtitlecolor'] ? $atts['subtitlecolor'] : '#b7daff',
+        );
 
         $danmaku = array(
             'id' => md5($id),
-            'token' => get_option( 'kblog_danmaku_token', '' ),
             'api' => get_option( 'kblog_danmaku_url', '' ),
+            'token' => get_option( 'kblog_danmaku_token', '' ),
+            'maximum' => $atts['maximum'] ? $atts['maximum'] : 1000,
+            'addition' => $atts['addition'] ? explode('-A-', $atts['addition']) : [],
+            'user' => $atts['user'] ? $atts['user'] : 'DIYgod',
+            'bottom' => $atts['bottom'] ? $atts['bottom'] : '15%',
+            'unlimited' => true,
         );
-        
+        if ($atts['unlimited']) $data['unlimited'] = ($atts['unlimited'] == 'true') ? true : false;
+		
+        $playerCode = '<div id="player'.$id.'" class="dplayer">';
+        $playerCode .= "</div>\n";
+
         if ($bilibili_param) {
             $bilibili_parsed = DPlayer::dplayer_bilibili_url_handler($bilibili_param);
             $danmaku['addition'] = array($bilibili_parsed['danma']);
             if ($danmaku['addition'] && empty($atts['url'])) {
-                $result['url'] = $bilibili_parsed['video'];
+                $video['url'] = $bilibili_parsed['video'];
             }
         }
         
-        $data['video'] = $result;
+        $data['video'] = $video;
+        $data['subtitle'] = $subtitle;
         $data['danmaku'] = ($atts['danmu'] != 'false') ? $danmaku : null;
 
         $js = json_encode($data);
@@ -176,7 +193,7 @@ EOF;
             
             $current_time = time();
             $last_check = (int)get_option( 'kblog_danmaku_dplayer_version_check', '0' );
-            $dplayer_version = get_option( 'kblog_danmaku_dplayer_version', '1.6.1' );
+            $dplayer_version = get_option( 'kblog_danmaku_dplayer_version', '1.25.0' );
             
             if ($current_time - $last_check > 86400 /* 86400 = 60 * 60 * 24 i.e 24hrs */) {
                 $response = wp_remote_get( 'https://cdnjs.cat.net/ajax/libs/dplayer/package.json' );

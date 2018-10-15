@@ -2,8 +2,8 @@
 Contributors: 0xbbc
 Tags: video, player, shortcode
 Requires at least: 3.0.1
-Tested up to: 4.8.1
-Stable tag: 1.2.2
+Tested up to: 4.9.8
+Stable tag: 1.2.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,9 @@ Parameter 'danmu', should DPlayer load danmaku. Default false and it's optional.
 3. Config Danmaku API URL and token in settings page
 
 == Changelog ==
+
+= 1.2.3 =
+boost to DPlayer 1.25.0
 
 = 1.2.2 =
 BootCDN updates too slowly. Change to cdnjs.cat.net
