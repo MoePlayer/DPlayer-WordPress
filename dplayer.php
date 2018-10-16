@@ -107,6 +107,7 @@ class DPlayer {
         
         $data = array(
             'id' => $id,
+            'live' => false,
             'autoplay' => false,
             'theme' => $atts['theme'] ? $atts['theme'] : '#FADFA3',
             'loop' => false,
@@ -135,7 +136,7 @@ class DPlayer {
         $subtitle = array(
             'url' => $atts['subtitleurl'] ? $atts['subtitleurl'] : '',
             'type' => $atts['subtitletype'] ? $atts['subtitletype'] : 'webvtt',
-            'fontSize' => $atts['subtitlefontSize'] ? $atts['subtitlefontSize'] : '25px', 
+            'fontSize' => $atts['subtitlefontsize'] ? $atts['subtitlefontsize'] : '25px', 
             'bottom' => $atts['subtitlebottom'] ? $atts['subtitlebottom'] : '10%',
             'color' => $atts['subtitlecolor'] ? $atts['subtitlecolor'] : '#b7daff',
         );
