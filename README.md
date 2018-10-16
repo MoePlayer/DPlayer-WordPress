@@ -45,7 +45,7 @@ Today, DPlayer is coming to WordPress.
 | subtitle.fontSize    | subtitlefontsize     | '20px'                             | 字幕字号                                                     |
 | subtitle.bottom      | subtitlebottom       | '40px'                             | 字幕距离播放器底部的距离，取值形如: '10px' '10%'             |
 | subtitle.color       | subtitlecolor        | '#b7daff'                          | 字幕颜色                                                     |
-| danmaku              |                      | -                                  | 显示弹幕                                                     |
+| danmaku              | danma                | true                               | 显示弹幕                                                     |
 | danmaku.id           | id                   | md5($id), 参考line 106             | 弹幕池id，必须唯一                                           |
 | danmaku.api          | 插件设置页面         | `required`                         | [详情](http://dplayer.js.org/#/home?id=danmaku-api)          |
 | danmaku.token        | 插件设置页面         | -                                  | 弹幕后端验证 token                                           |
