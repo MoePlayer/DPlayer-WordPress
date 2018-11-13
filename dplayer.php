@@ -2,7 +2,7 @@
 /*
 * Plugin Name: DPlayer for WordPress
 * Description: Wow, such a lovely HTML5 danmaku video player comes to WordPress
-* Version: 1.2.3
+* Version: 1.2.4
 * Author: 0xBBC
 * Author URI: https://blog.0xbbc.com/
 * License: GPLv3
@@ -124,7 +124,7 @@ class DPlayer {
         if ($atts['screenshot']) $data['screenshot'] = ($atts['screenshot'] == 'true') ? true : false;
         if ($atts['hotkey']) $data['hotkey'] = ($atts['hotkey'] == 'true') ? true : false;
         if ($atts['preload']) $data['preload'] = (in_array($atts['preload'], array('auto', 'metadata', 'none')) == true) ? $atts['preload'] : 'metadata';
-        if ($atts['mutex']) $data['mutex'] = ($atts['mutex'] == 'true') ? true : false;
+        if ($atts['mutex']) $data['mutex'] = ($atts['mutex'] == 'false') ? false : true;
 		
         $video = array(
             'url' => $atts['url'] ? $atts['url'] : '',
@@ -153,7 +153,7 @@ class DPlayer {
         );
         if ($atts['unlimited']) $data['unlimited'] = ($atts['unlimited'] == 'true') ? true : false;
 		
-        $playerCode = '<div id="player'.$id.'" class="dplayer">';
+        $playerCode = '<div id="player'.$id.'">';
         $playerCode .= "</div>\n";
 
         if ($bilibili_param) {
