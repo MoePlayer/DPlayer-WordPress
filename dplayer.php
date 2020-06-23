@@ -140,14 +140,14 @@ class DPlayer {
             'bottom' => $atts['subtitlebottom'] ? $atts['subtitlebottom'] : '10%',
             'color' => $atts['subtitlecolor'] ? $atts['subtitlecolor'] : '#b7daff',
         );
-
+        $current_user = wp_get_current_user();
         $danmaku = array(
             'id' => md5($id),
             'api' => get_option( 'kblog_danmaku_url', '' ),
             'token' => get_option( 'kblog_danmaku_token', '' ),
             'maximum' => $atts['maximum'] ? $atts['maximum'] : 1000,
             'addition' => $atts['addition'] ? explode('-A-', $atts['addition']) : [],
-            'user' => $atts['user'] ? $atts['user'] : 'DIYgod',
+            'user' => $current_user->user_login ? $current_user->user_login : 'DIYgod',
             'bottom' => $atts['bottom'] ? $atts['bottom'] : '15%',
             'unlimited' => true,
         );
