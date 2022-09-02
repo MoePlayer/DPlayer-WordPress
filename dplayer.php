@@ -202,7 +202,7 @@ EOF;
                     $body = $response['body']; // use the content
                     $json_data = @json_decode($body, true);
                     $json_dplayer_version = @$json_data['version'];
-                    if (preg_grep('/^[\d\.]+$/', $json_dplayer_version)) {
+                    if (preg_grep('/^[\d\.]+$/', (array) $json_dplayer_version)) {
                         if (strcmp($dplayer_version, $json_dplayer_version) != 0) {
                             update_option( 'kblog_danmaku_dplayer_version', $json_dplayer_version );
                             $dplayer_version = $json_dplayer_version;
